@@ -1,0 +1,15 @@
+# Example scanner configuration
+
+default_model: qwen2.5:7b
+temperature: 0.0
+
+enabled_connection_types:
+  - simulated_email
+  - simulated_file
+  - simulated_memory
+  - simulated_rag_context
+  - simulated_webhook
+
+notes:
+  - This config is a placeholder for future CLI configuration support.
+  - Current prototype loads all scenarios from the scenarios folder.
