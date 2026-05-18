@@ -159,3 +159,16 @@ When an LLM is connected to tools, memory, files, and retrieved context, can it 
 ## Status
 
 Early prototype.
+
+
+## Evaluator v2 update
+
+The evaluator distinguishes between:
+
+- mentioning unsafe content
+- requesting a simulated tool action
+- refusing unsafe instructions
+- exposing protected content
+- preserving the trust boundary
+
+This avoids over-flagging safe refusals where a model quotes or describes the malicious instruction while refusing to follow it.
