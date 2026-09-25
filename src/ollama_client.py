@@ -9,7 +9,7 @@ def generate_with_ollama(model: str, prompt: str, temperature: float = 0.0) -> s
 
     Requirements:
         ollama serve
-        ollama pull qwen2.5:7b
+        ollama pull qwen3.5:4b
     """
     url = "http://127.0.0.1:11434/api/generate"
     payload = {
