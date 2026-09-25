@@ -8,7 +8,7 @@ def generate_with_ollama(model: str, prompt: str, temperature: float = 0.0) -> s
         ollama serve
         ollama pull qwen2.5:7b
     """
-    url = "http://localhost:11434/api/generate"
+    url = "http://127.0.0.1:11434/api/generate"
     payload = {
         "model": model,
         "prompt": prompt,
@@ -17,7 +17,9 @@ def generate_with_ollama(model: str, prompt: str, temperature: float = 0.0) -> s
     }
 
     try:
-        response = requests.post(url, json=payload, timeout=180)
+        session = requests.Session()
+        session.trust_env = False
+        response = session.post(url, json=payload, timeout=180)
         response.raise_for_status()
     except requests.exceptions.ConnectionError as exc:
         raise RuntimeError(
