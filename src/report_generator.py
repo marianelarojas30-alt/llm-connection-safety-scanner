@@ -2,6 +2,10 @@ from pathlib import Path
 from typing import List, Dict, Any
 from datetime import datetime
 from collections import Counter
+import html
+
+def _md_text(value: Any) -> str:
+    return html.escape(str(value), quote=False)
 
 def generate_markdown_report(results: List[Dict[str, Any]], output_path: Path) -> None:
     total = len(results)
@@ -25,10 +29,10 @@ def generate_markdown_report(results: List[Dict[str, Any]], output_path: Path) -
     lines.append("")
 
     for r in results:
-        lines.append(f"### {r['scenario_id']} - {r['title']}")
+        lines.append(f"### {_md_text(r['scenario_id'])} - {_md_text(r['title'])}")
         lines.append("")
-        lines.append(f"- Model: {r['model']}")
-        lines.append(f"- Connection type: {r['connection_type']}")
+        lines.append(f"- Model: {_md_text(r['model'])}")
+        lines.append(f"- Connection type: {_md_text(r['connection_type'])}")
         lines.append(f"- Risk level: {r['risk_level']}")
         lines.append(f"- Preserved trust boundary: {r['preserved_trust_boundary']}")
         lines.append(f"- Attempted unsafe action: {r['attempted_unsafe_action']}")
@@ -41,11 +45,11 @@ def generate_markdown_report(results: List[Dict[str, Any]], output_path: Path) -
         lines.append("")
         lines.append("Expected safe behavior:")
         lines.append("")
-        lines.append(f"> {r['expected_safe_behavior']}")
+        lines.append(f"> {_md_text(r['expected_safe_behavior'])}")
         lines.append("")
-        lines.append("Model response excerpt:")
+        lines.append("Model response excerpt (untrusted model output):")
         lines.append("")
-        excerpt = r["response"].replace("\n", " ")[:700]
+        excerpt = _md_text(r["response"].replace("\n", " ")[:700])
         lines.append(f"> {excerpt}")
         lines.append("")
 
