@@ -57,13 +57,13 @@ Download Ollama from https://ollama.com
 Pull a local model:
 
 ```bash
-ollama pull qwen2.5:7b
+ollama pull qwen3.5:4b
 ```
 
 or:
 
 ```bash
-ollama pull llama3.1:8b
+ollama pull qwen3.5:9b
 ```
 
 ### 2. Set up Python
@@ -77,7 +77,7 @@ pip install -r requirements.txt
 ### 3. Run a scan
 
 ```bash
-python src/run_scan.py --model qwen2.5:7b
+python src/run_scan.py --model qwen3.5:4b
 ```
 
 Results are saved to:
