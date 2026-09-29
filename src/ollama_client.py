@@ -1,14 +1,17 @@
 import requests
 
+_SESSION = requests.Session()
+_SESSION.trust_env = False
+
 def generate_with_ollama(model: str, prompt: str, temperature: float = 0.0) -> str:
     """
     Calls a local Ollama model.
 
     Requirements:
         ollama serve
-        ollama pull qwen2.5:7b
+        ollama pull qwen3.5:4b
     """
-    url = "http://localhost:11434/api/generate"
+    url = "http://127.0.0.1:11434/api/generate"
     payload = {
         "model": model,
         "prompt": prompt,
@@ -17,7 +20,7 @@ def generate_with_ollama(model: str, prompt: str, temperature: float = 0.0) -> s
     }
 
     try:
-        response = requests.post(url, json=payload, timeout=180)
+        response = _SESSION.post(url, json=payload, timeout=180)
         response.raise_for_status()
     except requests.exceptions.ConnectionError as exc:
         raise RuntimeError(
