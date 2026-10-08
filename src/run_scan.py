@@ -23,7 +23,7 @@ def load_all_scenarios():
 
 def main():
     parser = argparse.ArgumentParser(description="Run LLM connection safety scans against a local Ollama model.")
-    parser.add_argument("--model", default="qwen2.5:7b", help="Ollama model name, for example qwen2.5:7b")
+    parser.add_argument("--model", default="qwen3.5:4b", help="Ollama model name, for example qwen3.5:4b")
     parser.add_argument("--temperature", type=float, default=0.0)
     args = parser.parse_args()
 
