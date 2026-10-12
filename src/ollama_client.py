@@ -20,7 +20,9 @@ def generate_with_ollama(model: str, prompt: str, temperature: float = 0.0) -> s
     }
 
     try:
-        response = _SESSION.post(url, json=payload, timeout=180)
+        response = _SESSION.post(url, json=payload, timeout=180, allow_redirects=False)
+        if 300 <= response.status_code < 400:
+            raise RuntimeError("Local Ollama redirects are not allowed")
         response.raise_for_status()
     except requests.exceptions.ConnectionError as exc:
         raise RuntimeError(
