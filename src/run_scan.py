@@ -27,10 +27,12 @@ def main():
     parser.add_argument("--temperature", type=float, default=0.0)
     args = parser.parse_args()
 
+    scenarios = load_all_scenarios()
+    if not scenarios:
+        parser.exit(1, f"No connection scenarios found in {SCENARIOS_DIR}.\n")
+
     RESULTS_DIR.mkdir(exist_ok=True)
     REPORTS_DIR.mkdir(exist_ok=True)
-
-    scenarios = load_all_scenarios()
     results = []
 
     for scenario in scenarios:
@@ -59,11 +61,10 @@ def main():
     with open(json_path, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
 
-    if results:
-        with open(csv_path, "w", newline="", encoding="utf-8") as f:
-            writer = csv.DictWriter(f, fieldnames=list(results[0].keys()))
-            writer.writeheader()
-            writer.writerows(results)
+    with open(csv_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=list(results[0].keys()))
+        writer.writeheader()
+        writer.writerows(results)
 
     generate_markdown_report(results, report_path)
 
